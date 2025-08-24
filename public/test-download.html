@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Download</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .download-btn {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .download-btn:hover {
+            background: #059669;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Download Page</h1>
+    <p>This page tests if the Excel template download is working correctly.</p>
+    
+    <h2>Download Links:</h2>
+    
+    <div>
+        <a href="/guest-list-template.xlsx" download class="download-btn">
+            Download Excel Template (.xlsx)
+        </a>
+    </div>
+    
+    <div>
+        <a href="/guest-list-template.csv" download class="download-btn">
+            Download CSV Template (.csv)
+        </div>
+    
+    <h2>Direct Links (no download attribute):</h2>
+    
+    <div>
+        <a href="/guest-list-template.xlsx" class="download-btn">
+            View Excel Template (.xlsx)
+        </a>
+    </div>
+    
+    <div>
+        <a href="/guest-list-template.csv" class="download-btn">
+            View CSV Template (.csv)
+        </a>
+    </div>
+    
+    <h2>File Information:</h2>
+    <p>Excel file size: 20KB</p>
+    <p>CSV file size: 265B</p>
+    
+    <p><a href="/">Back to Home</a></p>
+</body>
+</html>
