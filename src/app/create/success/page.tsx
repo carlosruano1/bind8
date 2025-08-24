@@ -1,11 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Logo from '@/components/Logo';
 import { useAuth } from '@/contexts/AuthContext';
 
-export default function SuccessPage() {
+// Main page component
+function SuccessContent() {
   const searchParams = useSearchParams();
   const [websiteUrl, setWebsiteUrl] = useState('');
   const [weddingId, setWeddingId] = useState('');
@@ -217,7 +218,7 @@ export default function SuccessPage() {
             </div>
           )}
 
-                        {/* Save Your Wedding Site Section */}
+          {/* Save Your Wedding Site Section */}
           {!isLoading && !user && (
             <div className="bg-white shadow-md rounded-2xl p-8 mb-8 border border-gray-200">
               <h3 className="font-playfair text-2xl font-light text-gray-900 mb-3 text-center">
@@ -307,7 +308,7 @@ export default function SuccessPage() {
             </div>
           )}
 
-              {/* Next Steps */}
+          {/* Next Steps */}
           {!isLoading && (
             <div className="bg-white rounded-2xl shadow-lg p-8">
               <h3 className="font-playfair text-2xl font-light text-gray-900 mb-6">
@@ -384,5 +385,14 @@ export default function SuccessPage() {
         </div>
       </footer>
     </div>
+  );
+}
+
+// Wrap the page in Suspense
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SuccessContent />
+    </Suspense>
   );
 }

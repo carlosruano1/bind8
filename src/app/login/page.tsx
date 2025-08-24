@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Logo from '@/components/Logo';
 import { signIn } from '@/lib/supabaseClient';
 
-export default function LoginPage() {
+// Main login component
+function LoginContent() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -139,39 +140,39 @@ export default function LoginPage() {
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
           <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
-                      <div className="text-center mb-8">
-            <h1 className="font-playfair text-3xl font-light text-gray-900 mb-2">
-              Welcome Back
-            </h1>
-            <p className="text-gray-600">
-              {weddingToClaim 
-                ? "Sign in to claim your wedding website" 
-                : "Sign in to manage your wedding website"}
-            </p>
-          </div>
-          
-          {/* Wedding site claiming info */}
-          {weddingToClaim && weddingData && (
-            <div className="mb-6 bg-emerald-50 p-4 rounded-lg border border-emerald-200">
-              <h3 className="font-medium text-emerald-800 mb-2">
-                You're claiming a wedding website
-              </h3>
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-500">
-                  💍
-                </div>
-                <div className="font-medium">
-                  {weddingData.coupleNames || 'Wedding Site'}
-                </div>
-              </div>
-              <p className="text-sm text-emerald-600 mb-2">
-                Sign in to claim this wedding site and save it permanently.
+            <div className="text-center mb-8">
+              <h1 className="font-playfair text-3xl font-light text-gray-900 mb-2">
+                Welcome Back
+              </h1>
+              <p className="text-gray-600">
+                {weddingToClaim 
+                  ? "Sign in to claim your wedding website" 
+                  : "Sign in to manage your wedding website"}
               </p>
-              <div className="text-xs text-gray-500">
-                Wedding ID: {weddingToClaim}
-              </div>
             </div>
-          )}
+            
+            {/* Wedding site claiming info */}
+            {weddingToClaim && weddingData && (
+              <div className="mb-6 bg-emerald-50 p-4 rounded-lg border border-emerald-200">
+                <h3 className="font-medium text-emerald-800 mb-2">
+                  You're claiming a wedding website
+                </h3>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-500">
+                    💍
+                  </div>
+                  <div className="font-medium">
+                    {weddingData.coupleNames || 'Wedding Site'}
+                  </div>
+                </div>
+                <p className="text-sm text-emerald-600 mb-2">
+                  Sign in to claim this wedding site and save it permanently.
+                </p>
+                <div className="text-xs text-gray-500">
+                  Wedding ID: {weddingToClaim}
+                </div>
+              </div>
+            )}
 
             {error && (
               <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg">
@@ -278,5 +279,16 @@ export default function LoginPage() {
         </div>
       </footer>
     </div>
+  );
+}
+
+// Wrap the page in Suspense
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">
+      <div className="w-16 h-16 border-4 border-emerald-200 border-t-emerald-500 rounded-full animate-spin"></div>
+    </div>}>
+      <LoginContent />
+    </Suspense>
   );
 }

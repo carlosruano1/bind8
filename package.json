@@ -12,7 +12,8 @@
     "db:reset": "node scripts/run-migrations.js --reset",
     "db:status": "node scripts/run-migrations.js --status",
     "admin:setup": "node scripts/setup-admin.js",
-    "admin:reset": "node scripts/setup-admin.js --reset"
+    "admin:reset": "node scripts/setup-admin.js --reset",
+    "deploy:prepare": "node scripts/deploy.js"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.7",
