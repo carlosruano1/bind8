@@ -4,9 +4,16 @@ import { apiRateLimit } from '@/lib/rateLimit';
 import { handleError, ValidationError, AuthenticationError } from '@/lib/errorHandler';
 import { getSupabase } from '@/lib/supabaseClient';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2023-10-16'
-});
+// Initialize Stripe only when needed, not at build time
+function getStripe() {
+  const secretKey = process.env.STRIPE_SECRET_KEY;
+  if (!secretKey) {
+    throw new Error('STRIPE_SECRET_KEY environment variable is not set');
+  }
+  return new Stripe(secretKey, {
+    apiVersion: '2023-10-16'
+  });
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -49,6 +56,9 @@ export async function POST(request: NextRequest) {
     if (planner.user_id !== user.id) {
       throw new ValidationError('Unauthorized access to planner profile');
     }
+
+    // Initialize Stripe only when needed
+    const stripe = getStripe();
 
     // Create a Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
